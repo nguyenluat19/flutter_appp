@@ -32,7 +32,7 @@ mongoose
 // Định nghĩa các routes
 app.use("/api/items", itemRoutes); // Route cho item
 app.use("/api/auth", authRoutes); // Route cho authentication
-app.use("", productRoutes); // Route cho sản phẩm
+app.use("/", productRoutes); // Route cho sản phẩm
 
 // Root endpoint để kiểm tra
 
