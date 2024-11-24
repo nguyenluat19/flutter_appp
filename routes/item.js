@@ -13,20 +13,21 @@ router.get("/", async (req, res) => {
 });
 
 // Endpoint để thêm sản phẩm
-router.post("/add", async (req, res) => {
+app.post("/add", async (req, res) => {
   try {
-    const { name, price, imageUrl } = req.body;
+    const { name, price, description, imageUrl } = req.body;
     if (!name || !price || !imageUrl) {
       return res.status(400).json({ error: "Thiếu dữ liệu sản phẩm" });
     }
 
-    const newProduct = new Product({ name, price, imageUrl });
-    await newProduct.save();
-    res.status(201).json({ message: "Thêm sản phẩm thành công", newProduct });
+    const newItem = new Product({ name, price, description, imageUrl });
+    await newItem.save();
+    res.status(201).json({ message: "Thêm sản phẩm thành công", newItem });
   } catch (err) {
     res.status(500).json({ error: "Lỗi khi thêm sản phẩm" });
   }
 });
+
 
 // Endpoint để sửa sản phẩm
 router.put("/update/:id", async (req, res) => {
