@@ -6,7 +6,6 @@ const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
-const itemRoutes = require('./models/item');
 const Product = require("./models/Product");
 
 dotenv.config();
@@ -41,7 +40,6 @@ app.get("/", async (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/", productRoutes);
-app.use("/api/items", itemRoutes);
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
