@@ -6,6 +6,7 @@ const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
+const itemRoutes = require('./routes/item');
 const Product = require("./models/Product");
 
 dotenv.config();
