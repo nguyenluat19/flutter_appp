@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
 });
 
 // Endpoint để thêm sản phẩm
-app.post("/add", async (req, res) => {
+router.post("/add", async (req, res) => {
   try {
     const { name, price, description, imageUrl } = req.body;
     if (!name || !price || !imageUrl) {
@@ -28,14 +28,13 @@ app.post("/add", async (req, res) => {
   }
 });
 
-
 // Endpoint để sửa sản phẩm
 router.put("/update/:id", async (req, res) => {
   try {
-    const { name, price, imageUrl } = req.body;
+    const { name, price, description, imageUrl } = req.body;
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
-      { name, price, imageUrl },
+      { name, price, description, imageUrl },
       { new: true }
     );
     if (!updatedProduct) {
