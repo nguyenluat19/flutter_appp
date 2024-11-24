@@ -1,7 +1,16 @@
-
 const express = require('express');
-const Item = require('../models/Item'); // Đảm bảo bạn đã định nghĩa schema Item trong models
+const Product = require('../models/Product');
 const router = express.Router();
+
+// Endpoint để lấy tất cả sản phẩm
+router.get("/", async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 // Endpoint để thêm sản phẩm
 router.post("/add", async (req, res) => {
@@ -11,14 +20,43 @@ router.post("/add", async (req, res) => {
       return res.status(400).json({ error: "Thiếu dữ liệu sản phẩm" });
     }
 
-    const newItem = new Item({ name, price, imageUrl });
-    await newItem.save();
-    res.status(201).json({ message: "Thêm sản phẩm thành công", newItem });
+    const newProduct = new Product({ name, price, imageUrl });
+    await newProduct.save();
+    res.status(201).json({ message: "Thêm sản phẩm thành công", newProduct });
   } catch (err) {
     res.status(500).json({ error: "Lỗi khi thêm sản phẩm" });
   }
 });
 
-// Bạn có thể thêm các route khác như sửa hoặc xóa sản phẩm ở đây.
+// Endpoint để sửa sản phẩm
+router.put("/update/:id", async (req, res) => {
+  try {
+    const { name, price, imageUrl } = req.body;
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id,
+      { name, price, imageUrl },
+      { new: true }
+    );
+    if (!updatedProduct) {
+      return res.status(404).json({ error: "Sản phẩm không tồn tại" });
+    }
+    res.json({ message: "Cập nhật sản phẩm thành công", updatedProduct });
+  } catch (err) {
+    res.status(500).json({ error: "Lỗi khi cập nhật sản phẩm" });
+  }
+});
+
+// Endpoint để xóa sản phẩm
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+    if (!deletedProduct) {
+      return res.status(404).json({ error: "Sản phẩm không tồn tại" });
+    }
+    res.json({ message: "Xóa sản phẩm thành công" });
+  } catch (err) {
+    res.status(500).json({ error: "Lỗi khi xóa sản phẩm" });
+  }
+});
 
 module.exports = router;
