@@ -41,7 +41,7 @@ app.get("/", async (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/", productRoutes);
-
+app.use("/api/items", itemRoutes);
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
