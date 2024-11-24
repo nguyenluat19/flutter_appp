@@ -7,7 +7,7 @@ const bcrypt = require("bcryptjs");
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const Product = require("./models/Product");
-
+const itemRoutes = require('./routes/item');
 dotenv.config();
 
 const app = express();
@@ -37,7 +37,7 @@ app.get("/", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
+app.use("/api/items", itemRoutes); 
 app.use("/api/auth", authRoutes);
 app.use("/", productRoutes);
 app.listen(port, () => {
